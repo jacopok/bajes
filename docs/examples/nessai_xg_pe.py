@@ -2,6 +2,8 @@
 nessai configuration for bajes: the nessai-gw network group-mixture proposal
 in the xg_pe setup (jacopok/nessai and jacopok/nessai-gw, branch xg_pe).
 
+    pip install -e .[nessai]                    # bajes + the xg_pe nessai, nessai-gw
+                                                # (torch CPU first: pip install torch --index-url https://download.pytorch.org/whl/cpu)
     bajes_setup -o ./run --tag gw ...           # as usual, without --marg-phi-ref
     python -m bajes -I ./run/inf.pkl -o ./run -e nessai --nlive 1000 -n 4 \
                     --nessai-config nessai_xg_pe.py

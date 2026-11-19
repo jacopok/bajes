@@ -74,6 +74,10 @@ setup(# metadata
                                        'scipy>=1.4.0',
                                        'astropy>=4.0.0'],
 
+      # optional requirements, e.g. pip install -e .[nessai]
+      extras_require                = {'nessai': ['nessai @ git+https://github.com/jacopok/nessai@xg_pe',
+                                                  'nessai-gw @ git+https://github.com/jacopok/nessai-gw@xg_pe']},
+
       # classifiers
       classifiers                   = ["Development Status :: 5 - Production/Stable",
                                        "License :: OSI Approved :: MIT License",
