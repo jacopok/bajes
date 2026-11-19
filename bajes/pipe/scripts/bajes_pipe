@@ -416,6 +416,14 @@ def write_run_string(config, tags, outdir):
         if 'tmax' in list_keys_in_sampler:
             run_string += '--tmax {} '.format(config['sampler']['tmax'])
 
+    elif config['sampler']['engine'] == 'nessai' or config['sampler']['engine'] == 'inessai':
+
+        run_string += '--engine {} '.format(config['sampler']['engine'])
+        run_string += '--nlive {} '.format(config['sampler']['nlive'])
+
+        if 'nessai-config' in list_keys_in_sampler:
+            run_string += '--nessai-config {} '.format(os.path.abspath(config['sampler']['nessai-config']))
+
     else:
         from bajes.inf import __known_samplers__
         logger.error("Invalid string for sampler engine. Plese use one of the following: {}".format(__known_samplers__))

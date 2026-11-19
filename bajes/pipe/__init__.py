@@ -291,6 +291,7 @@ def parse_main_options():
     parser.add_argument('--nbatch',         dest='nbatch',          default=512,        type=int,                                   help='[nest] number of live points for batch (dynesty-dyn). Default: 512')
     parser.add_argument('--dkl',            dest='dkl',             default=0.5,        type=float,                                 help='[nest] target KL divergence (ultranest). Default: 0.5')
     parser.add_argument('--z-frac',         dest='z_frac',          default=None,       type=float,                                 help='[nest] remaining Z fraction (ultranest). Default: None')
+    parser.add_argument('--nessai-config',  dest='nessai_config',   default=None,       type=str,                                   help='[nest] python file with nessai settings (nessai, inessai): optional parameter_map(prior, likelihood) and nessai_kwargs(model, likelihood, prior). Default: None')
 
     # MCMC options
     parser.add_argument('--nout',           dest='nout',            default=10000,      type=int,                                   help='[mcmc] number of posterior samples')
@@ -712,7 +713,8 @@ def init_sampler(posterior, pool, opts, proposals=None, rank=0):
                 'outdir':       opts.outdir,
                 'proposals':    proposals,
                 'rank':         rank,
-                'proposals_kwargs' : {'use_gw': opts.use_gw, 'use_slice': opts.use_slice}
+                'proposals_kwargs' : {'use_gw': opts.use_gw, 'use_slice': opts.use_slice},
+                'nessai_config': getattr(opts, 'nessai_config', None)
                 }
 
     return Sampler(opts.engine, posterior, **kwargs)

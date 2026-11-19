@@ -68,6 +68,10 @@ if __name__ == "__main__":
         if opts.engine == 'cpnest':
             raise AttributeError("MPI parallelisation not yet available with cpnest sampler.")
 
+        # nessai + MPI, not available
+        elif opts.engine in ['nessai', 'inessai']:
+            raise AttributeError("MPI parallelisation not available with nessai sampler, use --nprocs.")
+
         # ultranest + MPI
         elif opts.engine == 'ultranest':
 
@@ -140,7 +144,8 @@ if __name__ == "__main__":
         logger.info("Running inference in output directory {}".format(opts.outdir))
 
         # initialize multi-threading pool (if needed)
-        if (opts.engine != 'cpnest' and opts.nprocs>1):
+        # cpnest and nessai start their own pools
+        if (opts.engine not in ['cpnest', 'nessai', 'inessai'] and opts.nprocs>1):
             from .pipe import initialize_mthr_pool
             pool, close_pool   = initialize_mthr_pool(opts.nprocs)
         else:

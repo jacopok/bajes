@@ -9,7 +9,7 @@ from collections import namedtuple
 from .prior import Prior, Parameter, JointPrior
 from .likelihood import Likelihood, Posterior, JointLikelihood
 
-__known_samplers__     = ['emcee', 'ptmcmc', 'cpnest', 'ultranest', 'dynesty', 'dynesty-dyn']
+__known_samplers__     = ['emcee', 'ptmcmc', 'cpnest', 'ultranest', 'dynesty', 'dynesty-dyn', 'nessai', 'inessai']
 
 def Sampler(engine, model, **kwargs):
     """
@@ -56,6 +56,11 @@ def Sampler(engine, model, **kwargs):
         from .sampler.dynesty import SamplerDynestyDynamic as sampler
     elif engine == 'ultranest':
         from .sampler.ultranest import SamplerUltraNest as sampler
+    elif engine == 'nessai':
+        from .sampler.nessai import SamplerNessai as sampler
+    elif engine == 'inessai':
+        from .sampler.nessai import SamplerNessai as sampler
+        kwargs['importance_nested_sampler'] = True
     else:
         raise ValueError("Unable to define {} sampler. Please use one of the following: {}".format(engine, ', '.join(__known_samplers__)))
 
